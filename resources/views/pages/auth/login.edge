@@ -26,31 +26,38 @@
               <h3 class="mb-6 text-2xl font-medium text-center">
                 Sign in to your Account
               </h3>
-              <input
-                type="text"
-                name="email"
-                id="email"
-                class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
-                data-rounded="rounded-lg"
-                data-primary="blue-500"
-                placeholder="Email address"
-              />
-              <input
-                type="password"
-                name="password"
-                id="password"
-                class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
-                data-rounded="rounded-lg"
-                data-primary="blue-500"
-                placeholder="Password"
-              />
-              <div class="block">
-                <button
-                  class="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg"
-                  data-primary="blue-600"
+              @form.base({
+                action: "/login",
+                method: 'POST',
+                classNames: 'mt-6',
+              })
+
+                <input
+                  type="text"
+                  name="email"
+                  id="email"
+                  class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
                   data-rounded="rounded-lg"
-                >Log Me In</button>
-              </div>
+                  data-primary="blue-500"
+                  placeholder="Email address"
+                />
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  class="block w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
+                  data-rounded="rounded-lg"
+                  data-primary="blue-500"
+                  placeholder="Password"
+                />
+                <div class="block">
+                  <button
+                    class="w-full px-3 py-4 font-medium text-white bg-blue-600 rounded-lg"
+                    data-primary="blue-600"
+                    data-rounded="rounded-lg"
+                  >Log Me In</button>
+                </div>
+              @end
               <p class="w-full mt-4 text-sm text-center text-gray-500">
                 Don't have an account? <a href="/register" class="text-blue-500 underline">Sign up here</a>
               </p>
