@@ -7,8 +7,8 @@
 |
 */
 
-import router from '@adonisjs/core/services/router'
-import { middleware } from '#start/kernel'
+import router from '@adonisjs/core/services/router';
+import { middleware } from '#start/kernel';
 import AuthController from '#controllers/auth_controller';
 import UsersController from '#controllers/users_controller';
 import PostsController from '#controllers/posts_controller';
@@ -44,6 +44,6 @@ router.get('/register', async ({ view }) => {
 
 router.get('/', async ({ view }) => {
   return view.render('pages/home');
-}).use(middleware.guest());
+});
 
 router.post('/register', [AuthController, 'register']).use(middleware.guest());
