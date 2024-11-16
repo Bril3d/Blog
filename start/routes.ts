@@ -9,9 +9,10 @@
 
 import router from '@adonisjs/core/services/router';
 import { middleware } from '#start/kernel';
-import AuthController from '#controllers/auth_controller';
-import UsersController from '#controllers/users_controller';
-import PostsController from '#controllers/posts_controller';
+const AuthController = () => import('#controllers/auth_controller');
+const UsersController = () => import('#controllers/users_controller');
+const PostsController = () => import('#controllers/posts_controller');
+
 
 
 
