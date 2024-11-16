@@ -48,3 +48,5 @@ router.get('/', async ({ view }) => {
 });
 
 router.post('/register', [AuthController, 'register']).use(middleware.guest());
+
+router.post('logout', [AuthController, 'logout']).use(middleware.auth());

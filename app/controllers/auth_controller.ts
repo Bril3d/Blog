@@ -12,8 +12,6 @@ export default class AuthController {
      * Step 2: Verify credentials
      */
     const user = await User.verifyCredentials(email, password)
-    console.log('user : ')
-    console.log(user)
     /**
      * Step 3: Login user
      */
@@ -28,12 +26,17 @@ export default class AuthController {
   public async register({ request, response }: HttpContext) {
     const userData = request.only(['fullName', 'email', 'password']);
     try {
-      const user = await User.create(userData);
+      await User.create(userData);
 
-      return response.created(user);
+      return response.redirect('/');
     } catch (error) {
       return response.badRequest('User registration failed: ' + error.message);
     }
+  }
+
+  public async logout({ response, auth }: HttpContext) {
+    await auth.use('web').logout();
+    response.redirect().back();
   }
 }
 
