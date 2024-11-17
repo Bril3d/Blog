@@ -1,6 +1,6 @@
-import { HttpContext } from '@adonisjs/core/http';
-import User from '#models/user';
-
+import { HttpContext } from '@adonisjs/core/http'
+import User from '#models/user'
+import app from '@adonisjs/core/services/app'
 
 export default class AuthController {
   public async login({ request, auth, response }: HttpContext) {
@@ -24,19 +24,25 @@ export default class AuthController {
   }
 
   public async register({ request, response }: HttpContext) {
-    const userData = request.only(['fullName', 'email', 'password']);
-    try {
-      await User.create(userData);
+    const userData = request.only(['fullName', 'avatar', 'email', 'password'])
+    const avatar = request.file('avatar')
 
-      return response.redirect('/');
+    if (avatar) {
+      await avatar.move(app.makePath('storage/avatars'))
+      userData.avatar = `storage/avatars/${avatar.fileName}`
+    }
+
+    try {
+      await User.create(userData)
+
+      return response.redirect('/')
     } catch (error) {
-      return response.badRequest('User registration failed: ' + error.message);
+      return response.badRequest('User registration failed: ' + error.message)
     }
   }
 
   public async logout({ response, auth }: HttpContext) {
-    await auth.use('web').logout();
-    response.redirect().back();
+    await auth.use('web').logout()
+    response.redirect().back()
   }
 }
-
