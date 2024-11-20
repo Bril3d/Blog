@@ -1,6 +1,7 @@
 import { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import app from '@adonisjs/core/services/app'
+import { createUserValidator } from '#validators/user'
 
 export default class AuthController {
   public async login({ request, auth, response }: HttpContext) {
@@ -23,8 +24,10 @@ export default class AuthController {
     response.redirect('/')
   }
 
-  public async register({ request, response }: HttpContext) {
+  public async register({ request, response, auth }: HttpContext) {
     const userData = request.only(['fullName', 'avatar', 'email', 'password'])
+
+    await createUserValidator.validate(userData)
     const avatar = request.file('avatar')
 
     if (avatar) {
@@ -33,7 +36,9 @@ export default class AuthController {
     }
 
     try {
-      await User.create(userData)
+      const user = await User.create(userData)
+
+      await auth.use('web').login(user)
 
       return response.redirect('/')
     } catch (error) {
