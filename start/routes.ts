@@ -53,4 +53,15 @@ router.get('/', async ({ view }) => {
 
 router.post('/register', [AuthController, 'register'])
 
-router.post('logout', [AuthController, 'logout']).use(middleware.auth())
+router.post('logout', [AuthController, 'logout']).use(middleware.auth()).as('logout')
+
+router
+  .get('/dashboard', async ({ view }) => {
+    return view.render('pages/dashboard/dashboard')
+  })
+  .use(middleware.auth()).as('dashboard')
+router
+  .get('/profile', async ({ view }) => {
+    return view.render('pages/dashboard/profile')
+  })
+  .use(middleware.auth()).as('profile')
