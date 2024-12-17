@@ -27,7 +27,8 @@ export default class AuthController {
   public async register({ request, response, auth }: HttpContext) {
     const userData = request.only(['fullName', 'avatar', 'email', 'password'])
 
-    await createUserValidator.validate(userData)
+    const payload = await createUserValidator.validate(userData)
+    console.log(payload)
     const avatar = request.file('avatar')
 
     if (avatar) {
